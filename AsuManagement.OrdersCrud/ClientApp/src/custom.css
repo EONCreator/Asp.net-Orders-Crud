@@ -1,0 +1,175 @@
+/* Provide sufficient contrast against white background */
+html {
+    -webkit-text-stroke-width: thin;
+}
+
+a {
+  color: #0366d6;
+}
+
+button {
+    font-weight: 300 !important;
+}
+
+input {
+    border: 1px solid #ced4da;
+    border-radius: 0 !important;
+}
+
+select {
+    border: 1px solid #ced4da;
+}
+
+table {
+    margin: 10px 0;
+    font-size: 14.5px;
+}
+
+code {
+  color: #E01A76;
+}
+
+td {
+    padding: 3px 10px !important;
+    line-height: 26px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.tool-bar {
+    display: flex;
+    justify-content: end;
+    padding: 8px 0;
+}
+
+.tools {
+    width: 115px
+}
+
+.table-tools {
+    display: flex;
+    justify-content: end
+}
+
+.btn-default {
+    border: 1px solid lightgray
+}
+
+.btn-sm {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2px;
+    padding: 0;
+}
+
+input {
+    padding: 5px 8px;
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    border-right: 1px solid lightgray;
+}
+
+.filter .item {
+    margin: 0 10px;
+}
+
+.filter .item label {
+    padding: 0 8px;
+    font-size: 14px
+}
+
+select {
+    width: 128px;
+    padding: 7px 10px;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.form .title {
+    padding: 13px 0
+}
+
+.form .item {
+    padding: 17px 0
+}
+
+.form label {
+    width: 110px;
+    margin: 0 12px
+}
+
+.form select {
+    width: 200px
+}
+
+.form-tools {
+    display: flex;
+    justify-content: end;
+}
+
+.form-tools button {
+    margin: 0 5px;
+}
+
+.dialog .background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: gray;
+    opacity: 0.3;
+}
+
+.dialog-content {
+    position: fixed;
+    left: 35%;
+    top: 35%;
+    padding: 10px 15px;
+    background: white;
+}
+
+.dialog-content .body {
+    padding: 15px 0;
+}
+
+.dialog-content .footer {
+    display: flex;
+    justify-content: center;
+    margin: 0 5px;
+}
+
+.dialog-content .btn {
+    margin: 0 5px;
+}
+
+.error {
+    padding: 5px 135px
+}
+
+.errors-list {
+    padding: 0 5px;
+}
+
+.errors-list .error-item {
+    margin: 10px 0;
+    padding: 15px 25px;
+    background: #ff6c6c;
+    color: white;
+}
