@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
@@ -40,7 +41,6 @@ namespace AsuManagement.OrdersCrud.Domain.Services
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<OrderItem>().Property(p => p.Quantity).HasPrecision(12, 10);
             builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
             base.OnModelCreating(builder);
         }

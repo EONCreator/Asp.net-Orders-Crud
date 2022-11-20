@@ -10,6 +10,7 @@ using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using AutoMapper;
 using AsuManagement.OrdersCrud.Presenters.Orders;
+using AsuManagement.OrdersCrud.Domain.Services.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
+
+using var scope = app.Services.CreateScope();
+
+var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+db.Database.Migrate();
+
+await scope.ServiceProvider.GetRequiredService<DatabaseInitializer>().Initialize();
 
 app.Run();
