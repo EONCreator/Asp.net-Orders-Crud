@@ -7,6 +7,7 @@ using MediatR;
 using AsuManagement.OrdersCrud.Domain.Interfaces;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using AsuManagement.OrdersCrud.Domain.Core.Errors;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
 {
@@ -25,7 +26,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
 
             var order = await _repository.Entity<Order>().FirstOrDefaultAsync(o => o.Id == request.Id);
             if (order == null)
-                return EditOrderOutput.Failure("Заказ не найден");
+                return EditOrderOutput.Failure(OrderErrors.NotFound);
 
             var number = request.Number != null ? request.Number : order.Number;
             var providerId = request.ProviderId != null ? request.ProviderId : order.ProviderId;
@@ -35,11 +36,14 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
                 && o.ProviderId == providerId
                 && o.Id != order.Id);
             if (checkingOrder != null)
-                return EditOrderOutput.Failure("Заказ с таким номером и поставщиком уже существует");
+                return EditOrderOutput.Failure(OrderErrors.AlreadyExists);
 
             if (request.ProviderId != null)
             {
                 var provider = await _repository.Entity<Provider>().FirstOrDefaultAsync(p => p.Id == request.ProviderId);
+                if (provider == null)
+                    return EditOrderOutput.Failure(ProviderErrors.NotFound);
+
                 order.SetProvider(provider);
             }
 

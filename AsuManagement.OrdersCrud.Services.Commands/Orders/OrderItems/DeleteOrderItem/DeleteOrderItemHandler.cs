@@ -8,6 +8,7 @@ using AsuManagement.OrdersCrud.Domain.Interfaces;
 using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using AsuManagement.OrdersCrud.Domain.Core.Errors;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.OrderItems.DeleteOrderItem
 {
@@ -27,7 +28,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.OrderItems.DeleteOrderItem
             var orderItem = await _repository.Entity<OrderItem>()
                 .FirstOrDefaultAsync(o => o.Id == request.Id);
             if (orderItem == null)
-                return SucceededResult.Failure("Элемент заказа не найден");
+                return SucceededResult.Failure(OrderErrors.OrderItemNotFound);
 
             _repository.Entity<OrderItem>().Remove(orderItem);
 

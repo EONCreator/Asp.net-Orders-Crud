@@ -7,6 +7,7 @@ using MediatR;
 using AsuManagement.OrdersCrud.Domain.Interfaces;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using AsuManagement.OrdersCrud.Domain.Core.Errors;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
 {
@@ -25,7 +26,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
 
             var orderItem = await _repository.Entity<OrderItem>().FirstOrDefaultAsync(o => o.Id == request.Id);
             if (orderItem == null)
-                return EditOrderItemOutput.Failure("Элемент заказа не найден");
+                return EditOrderItemOutput.Failure(OrderErrors.OrderItemNotFound);
                 
             if (request.Name != null)
                 orderItem.SetName(request.Name);

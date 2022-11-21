@@ -10,5 +10,8 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Errors
     {
         public static string NotFound = "Заказ не найден";
         public static string AlreadyExists = "Заказ с таким номером и поставщиком уже существует";
+
+        public static string ItemNameSameWithOrderName = "Название элемента не может равняться номеру заказа";
+        public static string OrderItemNotFound = "Элемент заказа не найден";
     }
 }

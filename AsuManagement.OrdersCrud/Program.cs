@@ -30,6 +30,7 @@ services
         options.EnableSensitiveDataLogging();
     })
     .AddScoped<IEntityRepository>(f => f.GetRequiredService<AppDbContext>())
+    .AddScoped<DatabaseInitializer>()
     .AddMediatR(AppDomain.CurrentDomain.GetAssemblies())
     .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
     

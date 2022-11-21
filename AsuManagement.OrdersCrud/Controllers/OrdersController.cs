@@ -67,21 +67,18 @@ namespace AsuManagement.OrdersCrud.Controllers
 
         [HttpGet("getOrderItems")]
         public async Task<IActionResult> GetOrderItems([FromQuery] OrderItemsFilterModel request) {
-            var result = await _interactionBus.Send(new GetOrderItemsCommand(request.OrderId, request.Name, request.Unit));
-            return result;
+            return await _interactionBus.Send(new GetOrderItemsCommand(request.OrderId, request.Name, request.Unit));
         }
 
         [HttpGet("getOrderItem")]
         public async Task<IActionResult> GetOrderItem([FromQuery(Name = "id")] int id) {
-            var result = await _interactionBus.Send(new GetOrderItemCommand(id));
-            return result;
+            return await _interactionBus.Send(new GetOrderItemCommand(id));
         }
 
         [HttpPost("{id}/addItemToOrder")]
         public async Task<IActionResult> AddItemToOrder([FromRoute] int id, [FromBody] AddOrderItemModel request)
         {
-            var result = await _interactionBus.Send(new AddItemToOrderCommand(id, request.Name, request.Quantity, request.Unit));
-            return Ok(result);
+            return await _interactionBus.Send(new AddItemToOrderCommand(id, request.Name, request.Quantity, request.Unit));
         }
 
         [HttpPut("editOrderItem/{id}")]
@@ -93,8 +90,7 @@ namespace AsuManagement.OrdersCrud.Controllers
         [HttpDelete("deleteOrderItem/{id}")]
         public async Task<IActionResult> DeleteOrderItem([FromRoute] int id)
         {
-            var result = await _interactionBus.Send(new DeleteOrderItemCommand(id));
-            return Ok(result);
+            return await _interactionBus.Send(new DeleteOrderItemCommand(id));
         }
 
         #endregion

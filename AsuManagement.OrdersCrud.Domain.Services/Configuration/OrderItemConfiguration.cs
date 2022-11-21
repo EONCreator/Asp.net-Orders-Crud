@@ -21,7 +21,7 @@ namespace AsuManagement.OrdersCrud.Domain.Services.Configuration
                 .HasForeignKey(o => o.OrderId)
                 .IsRequired();
 
-            builder.Property(o => o.Name != o.Order.Number).IsRequired();
+            builder.Property(o => o.Name).IsRequired();
             builder.Property(o => o.Quantity).IsRequired();
             builder.Property(o => o.Unit).IsRequired();
 

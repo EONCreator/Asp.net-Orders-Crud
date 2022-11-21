@@ -11,7 +11,9 @@ export class OrderItemForm extends Component {
 
             name: '',
             quantity: 0,
-            unit: ''
+            unit: '',
+
+            errors: []
         };
     }
 
@@ -40,7 +42,12 @@ export class OrderItemForm extends Component {
                 body: JSON.stringify(orderItem)
             })
             .then(e => {
-                this.props.history.push(`/order?order_id=${orderId}`)
+                e.json().then(data => {
+                    if (data.errors)
+                        this.setState({ errors: data.errors })
+                    else
+                        this.props.history.push(`/order?order_id=${orderId}`)
+                })
             })
     }
 
@@ -57,7 +64,12 @@ export class OrderItemForm extends Component {
                 body: JSON.stringify(orderItem)
             })
             .then(e => {
-                this.props.history.push(`/order?order_id=${orderId}`)
+                e.json().then(data => {
+                    if (data.errors)
+                        this.setState({ errors: data.errors })
+                    else
+                        this.props.history.push(`/order?order_id=${orderId}`)
+                })
             })
     }
 
@@ -104,6 +116,11 @@ export class OrderItemForm extends Component {
                                         unit: this.state.unit
                                     })
                         }>OK</button>
+                </div>
+                <div className="errors-list">
+                    {
+                        this.state.errors.map(e => <div className="error-item">{e}</div>)
+                    }
                 </div>
             </div>
         );
