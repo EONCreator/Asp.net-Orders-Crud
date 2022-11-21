@@ -86,7 +86,7 @@ export class OrderItemForm extends Component {
                 <div className="row">
                     <div className="col-6 item">
                         <label>Название <span className="text-danger">*</span></label>
-                        <input placeholder="Введите название" value={this.state.name} onChange={(e) => this.setState({ name: e.target.value })} />
+                        <input type="text" placeholder="Введите название" value={this.state.name} onChange={(e) => this.setState({ name: e.target.value })} />
                     </div>
                     <div className="col-6 item">
                         <label>Величина <span className="text-danger">*</span></label>
@@ -95,7 +95,7 @@ export class OrderItemForm extends Component {
                     </div>
                     <div className="col-6 item">
                         <label>Единица <span className="text-danger">*</span></label>
-                        <input value={this.state.unit} onChange={(e) => this.setState({ unit: e.target.value })} />
+                        <input type="text" value={this.state.unit} onChange={(e) => this.setState({ unit: e.target.value })} />
                     </div>
                 </div>
                 <div className="form-tools">

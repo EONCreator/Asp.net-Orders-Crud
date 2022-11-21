@@ -15,12 +15,6 @@ namespace AsuManagement.OrdersCrud.Domain.Services.Configuration
         {
             builder.HasKey(c => c.Id);
 
-            builder
-                .HasOne(o => o.Order)
-                .WithMany()
-                .HasForeignKey(o => o.OrderId)
-                .IsRequired();
-
             builder.Property(o => o.Name).IsRequired();
             builder.Property(o => o.Quantity).IsRequired();
             builder.Property(o => o.Unit).IsRequired();
