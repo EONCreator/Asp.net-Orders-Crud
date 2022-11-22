@@ -31,12 +31,17 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
             var number = request.Number != null ? request.Number : order.Number;
             var providerId = request.ProviderId != null ? request.ProviderId : order.ProviderId;
 
-            var checkingOrder = await _repository.Entity<Order>()
-                .FirstOrDefaultAsync(o => o.Number == number
+            var sameOrder = await _repository.Entity<Order>()
+                .AnyAsync(o => o.Number == number
                 && o.ProviderId == providerId
                 && o.Id != order.Id);
-            if (checkingOrder != null)
+            if (sameOrder)
                 return EditOrderOutput.Failure(OrderErrors.AlreadyExists);
+
+            var orderItemsWithOrderNumber = await _repository.Entity<OrderItem>()
+                .AnyAsync(o => o.OrderId == order.Id && o.Name == number);
+            if (orderItemsWithOrderNumber)
+                return EditOrderOutput.Failure(OrderErrors.ItemNameSameWithOrderName);
 
             if (request.ProviderId != null)
             {

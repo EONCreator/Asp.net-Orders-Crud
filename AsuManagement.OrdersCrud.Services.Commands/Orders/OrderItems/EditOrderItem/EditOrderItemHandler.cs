@@ -8,6 +8,8 @@ using AsuManagement.OrdersCrud.Domain.Interfaces;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using AsuManagement.OrdersCrud.Domain.Core.Errors;
+using AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder;
+using AutoMapper.Execution;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
 {
@@ -27,9 +29,17 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
             var orderItem = await _repository.Entity<OrderItem>().FirstOrDefaultAsync(o => o.Id == request.Id);
             if (orderItem == null)
                 return EditOrderItemOutput.Failure(OrderErrors.OrderItemNotFound);
-                
+
             if (request.Name != null)
+            {
+                var order = await _repository.Entity<Order>()
+                    .Select(o => new { o.Id, o.Number })
+                    .FirstOrDefaultAsync(o => o.Id == orderItem.OrderId);
+                if (orderItem.Name == order.Number)
+                    return EditOrderItemOutput.Failure(OrderErrors.ItemNameSameWithOrderName);
+
                 orderItem.SetName(request.Name);
+            }
 
             if (request.Quantity != null)
                 orderItem.SetQuantity(request.Quantity.Value);
