@@ -32,10 +32,9 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
 
             if (request.Name != null)
             {
-                var order = await _repository.Entity<Order>()
+                if (await _repository.Entity<Order>()
                     .Select(o => new { o.Id, o.Number })
-                    .FirstOrDefaultAsync(o => o.Id == orderItem.OrderId);
-                if (orderItem.Name == order.Number)
+                    .AnyAsync(o => o.Id == orderItem.OrderId && o.Number == orderItem.Name))
                     return EditOrderItemOutput.Failure(OrderErrors.ItemNameSameWithOrderName);
 
                 orderItem.SetName(request.Name);

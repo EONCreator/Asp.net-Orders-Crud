@@ -31,21 +31,19 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
             var number = request.Number != null ? request.Number : order.Number;
             var providerId = request.ProviderId != null ? request.ProviderId : order.ProviderId;
 
-            var sameOrder = await _repository.Entity<Order>()
+            if (await _repository.Entity<Order>()
                 .AnyAsync(o => o.Number == number
                 && o.ProviderId == providerId
-                && o.Id != order.Id);
-            if (sameOrder)
+                && o.Id != order.Id))
                 return EditOrderOutput.Failure(OrderErrors.AlreadyExists);
-
-            var orderItemsWithOrderNumber = await _repository.Entity<OrderItem>()
-                .AnyAsync(o => o.OrderId == order.Id && o.Name == number);
-            if (orderItemsWithOrderNumber)
+            
+            if (await _repository.Entity<OrderItem>()
+                .AnyAsync(o => o.OrderId == order.Id && o.Name == number))
                 return EditOrderOutput.Failure(OrderErrors.ItemNameSameWithOrderName);
 
             if (request.ProviderId != null)
             {
-                var provider = await _repository.Entity<Provider>().FirstOrDefaultAsync(p => p.Id == request.ProviderId);
+                var provider = await _repository.Entity<Provider>().AnyAsync(p => p.Id == request.ProviderId);
                 if (provider == null)
                     return EditOrderOutput.Failure(ProviderErrors.NotFound);
 
