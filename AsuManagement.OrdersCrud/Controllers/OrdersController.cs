@@ -62,8 +62,30 @@ namespace AsuManagement.OrdersCrud.Controllers
             return await _interactionBus.Send(new DeleteOrderCommand(id));
         }
 
+        public class OrdersFilterModel
+        {
+            public string? Numbers { get; set; }
+            public string? Providers { get; set; }
+            public DateTime? DateFrom { get; set; }
+            public DateTime? DateTo { get; set; }
+        }
+
+        public class CreateOrderModel
+        {
+            public int ProviderId { get; set; }
+            public string Number { get; set; }
+            public DateTime Date { get; set; }
+        }
+
+        public class EditOrderModel
+        {
+            public int? ProviderId { get; set; }
+            public string? Number { get; set; }
+            public DateTime? Date { get; set; }
+        }
+
         #endregion
-        
+
         #region OrderItems
 
         [HttpGet("getOrderItems")]
@@ -92,6 +114,30 @@ namespace AsuManagement.OrdersCrud.Controllers
         public async Task<IActionResult> DeleteOrderItem([FromRoute] int id)
         {
             return await _interactionBus.Send(new DeleteOrderItemCommand(id));
+        }
+
+        public class OrderItemsFilterModel
+        {
+            public int OrderId { get; set; }
+            public string? Name { get; set; }
+            public decimal? Quantity { get; set; }
+            public string? Unit { get; set; }
+        }
+
+        public class AddOrderItemModel
+        {
+            public int OrderId { get; set; }
+            public string Name { get; set; }
+            public decimal Quantity { get; set; }
+            public string Unit { get; set; }
+        }
+
+        public class EditOrderItemModel
+        {
+            public int Id { get; set; }
+            public string? Name { get; set; }
+            public decimal? Quantity { get; set; }
+            public string? Unit { get; set; }
         }
 
         #endregion

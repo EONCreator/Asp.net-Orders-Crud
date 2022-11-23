@@ -41,25 +41,4 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Entities
         public void AddOrderItem(OrderItem item) => OrderItems.Add(item);
         public void RemoveOrderItem(OrderItem item) => OrderItems.Remove(item);
     }
-
-    public class OrdersFilterModel {
-        public string? Numbers { get; set; }
-        public string? Providers { get; set; }
-        public DateTime? DateFrom { get; set; }
-        public DateTime? DateTo { get; set; }
-    }
-
-    public class CreateOrderModel
-    {
-        public int ProviderId { get; set; }
-        public string Number { get; set; }
-        public DateTime Date { get; set; }
-    }
-
-    public class EditOrderModel
-    {
-        public int? ProviderId { get; set; }
-        public string? Number { get; set; }
-        public DateTime? Date { get; set; }
-    }
 }
