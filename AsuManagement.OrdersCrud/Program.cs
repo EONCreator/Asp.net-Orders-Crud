@@ -1,16 +1,10 @@
-using AsuManagement.OrdersCrud.Domain.Interfaces;
-using AsuManagement.OrdersCrud.Domain.Services;
-using AsuManagement.OrdersCrud.Services.Commands.Orders.CreateOrder;
-using MediatR;
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
 using AsuManagement.OrdersCrud.Presenters;
 using AsuManagement.OrdersCrud.Interaction;
-using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
-using AsuManagement.OrdersCrud.Domain.Core.Entities;
-using AutoMapper;
-using AsuManagement.OrdersCrud.Presenters.Orders;
 using AsuManagement.OrdersCrud.Domain.Services.Data;
+using AsuManagement.OrdersCrud.Domain.Interfaces;
+using AsuManagement.OrdersCrud.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

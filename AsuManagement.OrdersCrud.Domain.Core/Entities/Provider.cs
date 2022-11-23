@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AsuManagement.OrdersCrud.Domain.Interfaces;
+﻿using AsuManagement.OrdersCrud.Domain.Interfaces;
 
 namespace AsuManagement.OrdersCrud.Domain.Core.Entities
 {
@@ -22,6 +17,10 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Entities
 
         }
 
-        public void SetName(string name) => Name = name;
+        public void SetName(string name)
+        {
+            if (name != null)
+                Name = name;
+        }
     }
 }

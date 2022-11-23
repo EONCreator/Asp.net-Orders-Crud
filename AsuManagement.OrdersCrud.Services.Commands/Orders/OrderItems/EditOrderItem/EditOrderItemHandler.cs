@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using AsuManagement.OrdersCrud.Domain.Interfaces;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using AsuManagement.OrdersCrud.Domain.Core.Errors;
-using AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder;
-using AutoMapper.Execution;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
 {

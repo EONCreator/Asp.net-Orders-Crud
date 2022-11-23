@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using AsuManagement.OrdersCrud.Domain.Interfaces;
 using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;

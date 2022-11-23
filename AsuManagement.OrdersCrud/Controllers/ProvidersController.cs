@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using AsuManagement.OrdersCrud.Domain.Services;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
+﻿using Microsoft.AspNetCore.Mvc;
 using AsuManagement.OrdersCrud.Interaction;
+using AsuManagement.OrdersCrud.Services.Commands.Providers;
 
 namespace AsuManagement.OrdersCrud.Controllers
 {
@@ -20,9 +16,9 @@ namespace AsuManagement.OrdersCrud.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery(Name = "numbers")] string? numbers)
         {
-            return await _interactionBus.Send(new GetProvidersCommand());
+            return await _interactionBus.Send(new GetProvidersCommand(numbers));
         }
     }
 }

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AsuManagement.OrdersCrud.Domain.Core.Entities;
-using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
-using MediatR;
+﻿using AsuManagement.OrdersCrud.Domain.Core.Entities;
 
-namespace AsuManagement.OrdersCrud.Services.Commands.Orders
+namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
 {
-    public class GetOrdersOutput : GetManyQueryResponse<Order>
+    public class GetOrdersOutput
     {
+        public List<Order> Orders { get; }
         public List<string> Numbers { get; }
         public List<Provider> Providers { get; }
-        public GetOrdersOutput(List<Order> items, List<string> numbers, List<Provider> providers, int totalCount) : base(items, totalCount)
+        public GetOrdersOutput(List<Order> orders, List<string> numbers, List<Provider> providers)
         {
+            Orders = orders;
             Numbers = numbers;
             Providers = providers;
         }

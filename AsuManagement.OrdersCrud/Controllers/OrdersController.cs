@@ -1,20 +1,16 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
+using AsuManagement.OrdersCrud.Interaction;
+
+using AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders;
+using AsuManagement.OrdersCrud.Services.Commands.GetOne.Orders;
+
 using AsuManagement.OrdersCrud.Services.Commands.Orders.CreateOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.DeleteOrder;
-using AsuManagement.OrdersCrud.Domain.Services;
-using Microsoft.EntityFrameworkCore;
-using AsuManagement.OrdersCrud.Interaction;
-using AsuManagement.OrdersCrud.Helpers;
-using AsuManagement.OrdersCrud.Domain.Core.Entities;
-using AsuManagement.OrdersCrud.Presenters.Orders;
-using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
+
 using AsuManagement.OrdersCrud.Services.Commands.Orders.AddItemToOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem;
 using AsuManagement.OrdersCrud.Services.Commands.OrderItems.DeleteOrderItem;
-using AsuManagement.OrdersCrud.Services.Commands.Orders;
 
 namespace AsuManagement.OrdersCrud.Controllers
 {

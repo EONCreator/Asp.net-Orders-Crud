@@ -45,7 +45,7 @@ export class Order extends Component {
 
         fetch(`api/orders/getOrderItems?orderId=${orderId}&name=${name}&unit=${unit}`)
             .then(e => {
-                e.json().then(data => this.setState({ orderItems: data.items, loading: false }))
+                e.json().then(data => this.setState({ orderItems: data.orderItems, loading: false }))
             })
     }
 

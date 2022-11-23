@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AsuManagement.OrdersCrud.Domain.Interfaces;
+﻿using AsuManagement.OrdersCrud.Domain.Interfaces;
 
 namespace AsuManagement.OrdersCrud.Domain.Core.Entities
 {
@@ -38,7 +33,16 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Entities
             ProviderId = provider.Id;
         }
 
-        public void AddOrderItem(OrderItem item) => OrderItems.Add(item);
-        public void RemoveOrderItem(OrderItem item) => OrderItems.Remove(item);
+        public void AddOrderItem(OrderItem item)
+        {
+            if (item != null)
+                OrderItems.Add(item);
+        }
+
+        public void RemoveOrderItem(OrderItem item)
+        {
+            if (item != null)
+                OrderItems.Remove(item);
+        }
     }
 }

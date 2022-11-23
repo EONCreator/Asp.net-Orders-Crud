@@ -1,28 +1,27 @@
 using AsuManagement.OrdersCrud.Domain.Interfaces;
-using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using AsuManagement.OrdersCrud.Domain.Core;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
-using AsuManagement.OrdersCrud.Services.Commands;
 
-namespace AsuManagement.OrdersCrud.Presenters
+namespace AsuManagement.OrdersCrud.Services.Commands.GetOne.Orders
 {
-    public class GetOrderHandler : GetOneHandler<GetOrderCommand, Order>
+    public class GetOrderHandler : IRequestHandler<GetOrderCommand, GetOrderOutput>
     {
-        public GetOrderHandler(IEntityRepository repository) : base(repository) {
-            
+        private readonly IEntityRepository _repository;
+
+        public GetOrderHandler(IEntityRepository repository) {
+            _repository = repository;
         }
 
-        public override async Task<Order> Get(GetOrderCommand request)
+        public async Task<GetOrderOutput> Handle(GetOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = await Repository.Entity<Order>()
+            var order = await _repository.Entity<Order>()
             .Include(o => o.Provider)
             .Include(o => o.OrderItems)
 
-            .FirstOrDefaultAsync(o => o.Id == request.Id);
+            .FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
-            return order;
+            return new GetOrderOutput(order);
         }
     }
 }

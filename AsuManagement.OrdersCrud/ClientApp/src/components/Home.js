@@ -52,7 +52,7 @@ export class Home extends Component {
             .then(e => {
                 e.json().then(data => this.setState(
                 { 
-                    orders: data.items,
+                    orders: data.orders,
                     numbers: data.numbers,
                     providers: data.providers,
                     loading: false 

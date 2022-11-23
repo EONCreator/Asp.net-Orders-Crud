@@ -1,15 +1,9 @@
 using AsuManagement.OrdersCrud.Domain.Interfaces;
-using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using AsuManagement.OrdersCrud.Domain.Core;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
-using AsuManagement.OrdersCrud.Services.Commands;
-using System.Linq;
-using AsuManagement.OrdersCrud.Services.Commands.Orders.CreateOrder;
-using AsuManagement.OrdersCrud.Services.Commands.Orders;
 
-namespace AsuManagement.OrdersCrud.Services.Commands.Orders
+namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
 {
     public class GetOrdersHandler : IRequestHandler<GetOrdersCommand, GetOrdersOutput>
     {
@@ -27,8 +21,8 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders
                 .Include(o => o.Provider)
                 .AsQueryable();
 
-            var numbers = orders.Select(i => i.Number).Distinct().ToList();
-            var providers = orders.Select(i => i.Provider).Distinct().ToList();
+            var numbers = await orders.Select(i => i.Number).Distinct().ToListAsync();
+            var providers = await orders.Select(i => i.Provider).Distinct().ToListAsync();
 
             if (request.Numbers != null)
             {
@@ -49,7 +43,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders
             orders = orders.Where(o => o.Date.Date <= dateTo);
 
             var items = await orders.ToListAsync();
-            return new GetOrdersOutput(items, numbers, providers, items.Count);
+            return new GetOrdersOutput(items, numbers, providers);
         }
     }
 }

@@ -1,19 +1,16 @@
-﻿using AsuManagement.OrdersCrud.Presenters.Orders;
+﻿using MediatR;
+using AsuManagement.OrdersCrud.Presenters.Orders;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.CreateOrder;
-using Microsoft.AspNetCore.Mvc;
 using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
-using AsuManagement.OrdersCrud.Helpers;
-using System.Reflection;
-using AsuManagement.OrdersCrud.Domain.Interfaces;
-using AsuManagement.OrdersCrud.Domain.Services;
-using AsuManagement.OrdersCrud.Domain.Core.Entities;
-using MediatR;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.DeleteOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.AddItemToOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem;
 using AsuManagement.OrdersCrud.Services.Commands.OrderItems.DeleteOrderItem;
-using AsuManagement.OrdersCrud.Services.Commands.Orders;
+using AsuManagement.OrdersCrud.Services.Commands.Providers;
+using AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders;
+using AsuManagement.OrdersCrud.Services.Commands.GetOne.Orders;
+using AsuManagement.OrdersCrud.Presenters.Providers;
 
 namespace AsuManagement.OrdersCrud.Presenters
 {
@@ -23,8 +20,8 @@ namespace AsuManagement.OrdersCrud.Presenters
             services
 
         #region Providers
-            .AddScoped<IRequestHandler<GetProvidersCommand, GetManyQueryResponse<Provider>>, GetProvidersHandler>()
-            .AddScoped<IResponsePresenter<GetManyQueryResponse<Provider>>, QueryResponsesPresenter<Provider>>()
+            .AddScoped<IRequestHandler<GetProvidersCommand, GetProvidersOutput>, GetProvidersHandler>()
+            .AddScoped<IResponsePresenter<GetProvidersOutput>, GetProvidersPresenter>()
         #endregion
 
 
@@ -32,8 +29,8 @@ namespace AsuManagement.OrdersCrud.Presenters
             .AddScoped<IRequestHandler<GetOrdersCommand, GetOrdersOutput>, GetOrdersHandler>()
             .AddScoped<IResponsePresenter<GetOrdersOutput>, GetOrdersPresenter>()
 
-            .AddScoped<IRequestHandler<GetOrderCommand, GetOneQueryResponse<Order>>, GetOrderHandler>()
-            .AddScoped<IResponsePresenter<GetOneQueryResponse<Order>>, QueryResponsesPresenter<Order>>()
+            .AddScoped<IRequestHandler<GetOrderCommand, GetOrderOutput>, GetOrderHandler>()
+            .AddScoped<IResponsePresenter<GetOrderOutput>, GetOrderPresenter>()
 
             .AddScoped<IRequestHandler<CreateOrderCommand, CreateOrderOutput>, CreateOrderHandler>()
             .AddScoped<IResponsePresenter<CreateOrderOutput>, CreateOrderPresenter>()
@@ -46,11 +43,11 @@ namespace AsuManagement.OrdersCrud.Presenters
         #endregion
 
         #region OrderItems
-            .AddScoped<IRequestHandler<GetOrderItemsCommand, GetManyQueryResponse<OrderItem>>, GetOrderItemsHandler>()
-            .AddScoped<IResponsePresenter<GetManyQueryResponse<OrderItem>>, QueryResponsesPresenter<OrderItem>>()
+            .AddScoped<IRequestHandler<GetOrderItemsCommand, GetOrderItemsOutput>, GetOrderItemsHandler>()
+            .AddScoped<IResponsePresenter<GetOrderItemsOutput>, GetOrderItemsPresenter>()
 
-            .AddScoped<IRequestHandler<GetOrderItemCommand, GetOneQueryResponse<OrderItem>>, GetOrderItemHandler>()
-            .AddScoped<IResponsePresenter<GetOneQueryResponse<OrderItem>>, QueryResponsesPresenter<OrderItem>>()
+            .AddScoped<IRequestHandler<GetOrderItemCommand, GetOrderItemOutput>, GetOrderItemHandler>()
+            .AddScoped<IResponsePresenter<GetOrderItemOutput>, GetOrderItemPresenter>()
 
             .AddScoped<IRequestHandler<AddItemToOrderCommand, AddItemToOrderOutput>, AddItemToOrderHandler>()
             .AddScoped<IResponsePresenter<AddItemToOrderOutput>, AddItemToOrderPresenter>()

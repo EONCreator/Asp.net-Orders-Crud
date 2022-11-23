@@ -1,25 +1,24 @@
-using AsuManagement.OrdersCrud.Domain.Interfaces;
-using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using AsuManagement.OrdersCrud.Domain.Core;
+using MediatR;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
-using AsuManagement.OrdersCrud.Services.Commands;
+using AsuManagement.OrdersCrud.Domain.Interfaces;
 
-namespace AsuManagement.OrdersCrud.Presenters
+namespace AsuManagement.OrdersCrud.Services.Commands.GetOne.Orders
 {
-    public class GetOrderItemHandler : GetOneHandler<GetOrderItemCommand, OrderItem>
+    public class GetOrderItemHandler : IRequestHandler<GetOrderItemCommand, GetOrderItemOutput>
     {
-        public GetOrderItemHandler(IEntityRepository repository) : base(repository) {
-            
+        private readonly IEntityRepository _repository;
+
+        public GetOrderItemHandler(IEntityRepository repository) {
+            _repository = repository;
         }
 
-        public override async Task<OrderItem> Get(GetOrderItemCommand request)
+        public async Task<GetOrderItemOutput> Handle(GetOrderItemCommand request, CancellationToken cancellationToken)
         {
-            var orderItem = await Repository.Entity<OrderItem>()
-                .FirstOrDefaultAsync(o => o.Id == request.Id);
+            var orderItem = await _repository.Entity<OrderItem>()
+                .FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
-            return orderItem;
+            return new GetOrderItemOutput(orderItem);
         }
     }
 }

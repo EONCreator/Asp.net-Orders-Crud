@@ -1,23 +1,21 @@
 using AsuManagement.OrdersCrud.Domain.Interfaces;
-using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using AsuManagement.OrdersCrud.Domain.Core;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
-using AsuManagement.OrdersCrud.Services.Commands;
-using System.Linq;
-using AsuManagement.OrdersCrud.Services.Commands.Orders.CreateOrder;
 
-namespace AsuManagement.OrdersCrud.Domain.Interfaces.Results
+namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
 {
-    public class GetOrderItemsHandler : GetManyHandler<GetOrderItemsCommand, OrderItem>
+    public class GetOrderItemsHandler : IRequestHandler<GetOrderItemsCommand, GetOrderItemsOutput>
     {
-        public GetOrderItemsHandler(IEntityRepository repository) : base(repository) {
+        private readonly IEntityRepository _repository;
+
+        public GetOrderItemsHandler(IEntityRepository repository) {
+            _repository = repository;
         }
 
-        public override async Task<List<OrderItem>> Get(GetOrderItemsCommand request)
+        public async Task<GetOrderItemsOutput> Handle(GetOrderItemsCommand request, CancellationToken cancellationToken)
         {
-            var orderItems = Repository.Entity<OrderItem>()
+            var orderItems = _repository.Entity<OrderItem>()
                 .Where(o => o.OrderId == request.OrderId);
 
             if (request.Name != null)
@@ -27,8 +25,8 @@ namespace AsuManagement.OrdersCrud.Domain.Interfaces.Results
             if (request.Unit != null)
                 orderItems = orderItems.Where(o => o.Unit.ToLower()
                     .Contains(request.Unit.ToLower()));
-            
-            return await orderItems.ToListAsync();;
+
+            return new GetOrderItemsOutput(await orderItems.ToListAsync());
         }
     }
 }

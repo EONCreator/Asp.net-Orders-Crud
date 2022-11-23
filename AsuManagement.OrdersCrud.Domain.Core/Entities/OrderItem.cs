@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AsuManagement.OrdersCrud.Domain.Interfaces;
+﻿using AsuManagement.OrdersCrud.Domain.Interfaces;
 
 namespace AsuManagement.OrdersCrud.Domain.Core.Entities
 {
@@ -25,14 +20,22 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Entities
             Unit = unit;
         }
 
-        public void SetName(string name) => Name = name;
+        public void SetName(string name)
+        {
+            if (name != null)
+                Name = name;
+        }
+
         public void SetQuantity(decimal quantity) => Quantity = quantity;
         public void SetUnit(string unit) => Unit = unit;
 
         public void SetOrder(Order order)
         {
-            Order = order;
-            OrderId = order.Id;
+            if (order != null)
+            {
+                Order = order;
+                OrderId = order.Id;
+            }
         }
     }
 }

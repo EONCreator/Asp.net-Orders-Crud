@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AsuManagement.OrdersCrud.Presenters.Orders
 {
-    public class GetOrdersPresenter : IResponsePresenter<GetOrdersOutput>
+    public class GetOrderItemsPresenter : IResponsePresenter<GetOrderItemsOutput>
     {
-        public Task<IActionResult> Present(GetOrdersOutput response) =>
+        public Task<IActionResult> Present(GetOrderItemsOutput response) =>
             Task.FromResult<IActionResult>(JsonActionResult.Ok(response));
     }
 }
