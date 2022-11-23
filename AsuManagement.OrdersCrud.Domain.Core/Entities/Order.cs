@@ -24,7 +24,12 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Entities
             Date = date;
         }
 
-        public void SetNumber(string number) => Number = number;
+        public void SetNumber(string number)
+        {
+            if (number != null)
+                Number = number;
+        }
+
         public void SetDate(DateTime date) => Date = date;
 
         public void SetProvider(Provider provider)
