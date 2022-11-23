@@ -183,6 +183,29 @@ select {
     padding: 5px 2px;
 }
 
+.filters {
+    display: flex;
+    padding: 3px 0;
+}
+
+.filter-row {
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-label {
+    margin-right: 5px;
+}
+
+.filter-item {
+    padding: 0 10px;
+    margin: 0 5px;
+    background: blue;
+    border-radius: 5px;
+    color: white;
+}
+
 .filter-button {
     display: flex;
     align-items: center;

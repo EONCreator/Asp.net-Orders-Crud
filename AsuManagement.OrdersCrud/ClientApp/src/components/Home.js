@@ -71,16 +71,18 @@ export class Home extends Component {
         })
     }
 
-    componentDidMount() {
-        this.getOrders()
-
+    multipleSelectTriggersHandler() {
         let obj = this
         document.body.onclick = function (event) {
-            console.log(event)
             if (event.target.className != "multiple-select")
                 if (!obj.state.showNumbersFilter)
                     obj.setState({ showNumbersFilter: false })
         }
+    }
+
+    componentDidMount() {
+        this.getOrders()
+        this.multipleSelectTriggersHandler()
     }
 
     setNumbersToFilter(e) {
@@ -145,6 +147,16 @@ export class Home extends Component {
                         </div>
                     </div>
                     <button className="btn btn-success" onClick={() => this.props.history.push('/orderform')}>Добавить</button>
+                </div>
+                <div class="filters">
+                    <div class="filter-row">
+                        <div className="filter-label">Номера:</div>
+                        {this.state.numbersToFilter.map(n => <div className="filter-item">{n}</div>)}
+                    </div>
+                    <div class="filter-row">
+                        <div className="filter-label">Поставщики:</div>
+                        {this.state.providersToFilter.map(p => <div className="filter-item">{this.state.providers.filter(pr => pr.id == p)[0].name}</div>)}
+                    </div>
                 </div>
                 <table className="table table-bordered table-striped">
                     <thead>
