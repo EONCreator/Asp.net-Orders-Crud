@@ -30,17 +30,17 @@ export class Home extends Component {
         this.setState({ loading: true })
 
         const numbers = this.state.numbersToFilter
+        const providers = this.state.providersToFilter
         const dateFrom = this.state.dateFrom
         const dateTo = this.state.dateTo
-        const providerId = this.state.providerId
 
         let filterString = ``;
 
         if (numbers.length)
             filterString = filterString + `numbers=${numbers}`
 
-        if (providerId)
-            filterString = filterString + `&providerId=${providerId}`
+        if (providers)
+            filterString = filterString + `&providers=${providers}`
 
         if (dateFrom)
             filterString = filterString + `&dateFrom=${dateFrom}`
@@ -96,6 +96,19 @@ export class Home extends Component {
         }
     }
 
+    setProvidersToFilter(e) {
+        this.setState({ providersToFilter: [] })
+
+        var providers = []
+        var options = e.target.options;
+        for (var i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                providers.push(options[i].value)
+                this.setState({ providersToFilter: providers });
+            }
+        }
+    }
+
     render() {
         return (
             <div>
@@ -110,13 +123,13 @@ export class Home extends Component {
                                     }
                             </select>
                         </div>
-                        <div className="item">
-                            <label>Поставщик</label>
-                            <select value={this.state.providerId} onChange={(e) => this.setState({ providerId: e.target.value })}>
-                                <option value={0}>Все</option>
-                                {
-                                    this.state.providers.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)
-                                }
+                        <div className="item" id="providerFiltersButton">
+                            <button className="filter-button">Поставщики<img src="./icons/arrow-down.png" /></button>
+                            <select className="multiple-select" id="providerFilter" multiple
+                                onChange={(e) => this.setProvidersToFilter(e)}>
+                                    {
+                                        this.state.providers.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)
+                                    }
                             </select>
                         </div>
                         <div className="item">

@@ -11,12 +11,12 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders
 {
     public class GetOrdersCommand : IRequest<GetOrdersOutput>
     {
-        public List<string> Numbers { get; }
-        public List<int> Providers { get; }
+        public string? Numbers { get; }
+        public string? Providers { get; }
         public DateTime? DateFrom { get; }
         public DateTime? DateTo { get; }
 
-        public GetOrdersCommand(List<string> numbers, List<int> providers, DateTime? dateFrom, DateTime? dateTo) {
+        public GetOrdersCommand(string? numbers, string? providers, DateTime? dateFrom, DateTime? dateTo) {
             Numbers = numbers;
             Providers = providers;
             DateFrom = dateFrom;

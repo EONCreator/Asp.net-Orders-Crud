@@ -30,11 +30,17 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders
             var numbers = orders.Select(i => i.Number).Distinct().ToList();
             var providers = orders.Select(i => i.Provider).Distinct().ToList();
 
-            if (request.Numbers.Count > 0)
-                orders = orders.Where(o => request.Numbers.Any(n => o.Number == n));
+            if (request.Numbers != null)
+            {
+                var numbersToFilter = request.Numbers.Split(",").ToList();
+                orders = orders.Where(o => numbersToFilter.Any(n => o.Number == n));
+            }
 
-            if (request.Providers.Count > 0)
-                orders = orders.Where(o => request.Providers.Any(p => o.ProviderId == p));
+            if (request.Providers != null)
+            {
+                var providersToFilter = request.Providers.Split(",").Select(Int32.Parse).ToList();
+                orders = orders.Where(o => providersToFilter.Any(p => o.ProviderId == p));
+            }
 
             if (request.DateFrom != null && request.DateTo != null)
                 orders = orders.Where(o => o.Date.Date >= request.DateFrom.Value.Date);

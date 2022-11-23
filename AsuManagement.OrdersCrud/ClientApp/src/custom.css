@@ -176,6 +176,11 @@ select {
 
 .multiple-select {
     position: absolute;
+    min-width: 170px;
+}
+
+.multiple-select option {
+    padding: 5px 2px;
 }
 
 .filter-button {
@@ -196,5 +201,13 @@ select {
 }
 
 #numberFiltersButton:hover #numberFilter {
+    display: block !important
+}
+
+#providerFilter {
+    display: none;
+}
+
+#providerFiltersButton:hover #providerFilter {
     display: block !important
 }
