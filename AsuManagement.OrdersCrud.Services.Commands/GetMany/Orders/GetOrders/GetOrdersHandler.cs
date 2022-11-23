@@ -42,11 +42,11 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders
                 orders = orders.Where(o => providersToFilter.Any(p => o.ProviderId == p));
             }
 
-            if (request.DateFrom != null && request.DateTo != null)
-                orders = orders.Where(o => o.Date.Date >= request.DateFrom.Value.Date);
+            var dateStart = request.DateFrom ?? DateTime.Now.AddMonths(-1);
+            orders = orders.Where(o => o.Date.Date >= request.DateFrom.Value.Date);
 
-            if (request.DateTo != null)
-                orders = orders.Where(o => o.Date.Date <= request.DateTo.Value.Date);
+            var dateEnd = request.DateTo ?? DateTime.Now;
+            orders = orders.Where(o => o.Date.Date <= request.DateTo.Value.Date);
 
             var items = await orders.ToListAsync();
             return new GetOrdersOutput(items, numbers, providers, items.Count);
