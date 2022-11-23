@@ -38,8 +38,8 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Entities
     }
 
     public class OrdersFilterModel {
-        public string? Number { get; set; }
-        public int? ProviderId { get; set; }
+        public List<string> Numbers { get; set; } = new();
+        public List<int> Providers { get; set; } = new();
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
     }

@@ -7,6 +7,7 @@ export class Home extends Component {
         super(props)
         this.state = {
             orders: [],
+            numbers: [],
             providers: [],
 
             number: '',
@@ -15,27 +16,28 @@ export class Home extends Component {
             dateTo: null,
             providerId: null,
 
+            numbersToFilter: [],
+            providersToFilter: [],
+
+            showNumbersFilter: false,
+            showProvidersFilter: false,
+
             loading: false
         }
-    }
-
-    //For UI
-    getProviders = () => {
-        fetch(`api/providers/`)
-            .then(e => {
-                e.json().then(data => this.setState({ providers: data.items }))
-            })
     }
 
     getOrders = () => {
         this.setState({ loading: true })
 
-        const number = this.state.number
+        const numbers = this.state.numbersToFilter
         const dateFrom = this.state.dateFrom
         const dateTo = this.state.dateTo
         const providerId = this.state.providerId
 
-        let filterString = `number=${number}`;
+        let filterString = ``;
+
+        if (numbers.length)
+            filterString = filterString + `numbers=${numbers}`
 
         if (providerId)
             filterString = filterString + `&providerId=${providerId}`
@@ -48,7 +50,13 @@ export class Home extends Component {
             
         fetch(`api/orders?${filterString}`)
             .then(e => {
-                e.json().then(data => this.setState({ orders: data.items, loading: false }))
+                e.json().then(data => this.setState(
+                { 
+                    orders: data.items,
+                    numbers: data.numbers,
+                    providers: data.providers,
+                    loading: false 
+                }))
             })
     }
 
@@ -63,12 +71,29 @@ export class Home extends Component {
         })
     }
 
-    componentWillMount() {
-        this.getProviders()
-    }
-
     componentDidMount() {
         this.getOrders()
+
+        let obj = this
+        document.body.onclick = function (event) {
+            console.log(event)
+            if (event.target.className != "multiple-select")
+                if (!obj.state.showNumbersFilter)
+                    obj.setState({ showNumbersFilter: false })
+        }
+    }
+
+    setNumbersToFilter(e) {
+        this.setState({ numbersToFilter: [] })
+
+        var numbers = []
+        var options = e.target.options;
+        for (var i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                numbers.push(options[i].value)
+                this.setState({ numbersToFilter: numbers });
+            }
+        }
     }
 
     render() {
@@ -76,8 +101,14 @@ export class Home extends Component {
             <div>
                 <div className="tool-bar">
                     <div className="filter">
-                        <div className="item">
-                            <input value={this.state.number} onChange={(e) => this.setState({ number: e.target.value })} className="form-control" placeholder="Номер" />
+                        <div className="item" id="numberFiltersButton">
+                            <button className="filter-button">Номера<img src="./icons/arrow-down.png" /></button>
+                            <select className="multiple-select" id="numberFilter" multiple
+                                onChange={(e) => this.setNumbersToFilter(e)}>
+                                    {
+                                        this.state.numbers.map((e) => <option key={e} value={e}>{e}</option>)
+                                    }
+                            </select>
                         </div>
                         <div className="item">
                             <label>Поставщик</label>

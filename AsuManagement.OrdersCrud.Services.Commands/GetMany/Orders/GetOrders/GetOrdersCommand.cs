@@ -6,20 +6,19 @@ using AsuManagement.OrdersCrud.Domain.Core;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using AsuManagement.OrdersCrud.Services.Commands;
 using System.Linq;
-using AsuManagement.OrdersCrud.Services.Commands.Orders.CreateOrder;
 
-namespace AsuManagement.OrdersCrud.Domain.Interfaces.Results
+namespace AsuManagement.OrdersCrud.Services.Commands.Orders
 {
-    public class GetOrdersCommand : GetManyCommand<Order>
+    public class GetOrdersCommand : IRequest<GetOrdersOutput>
     {
-        public string Number { get; }
-        public int? ProviderId { get; }
+        public List<string> Numbers { get; }
+        public List<int> Providers { get; }
         public DateTime? DateFrom { get; }
         public DateTime? DateTo { get; }
 
-        public GetOrdersCommand(string number, int? providerId, DateTime? dateFrom, DateTime? dateTo) {
-            Number = number;
-            ProviderId = providerId;
+        public GetOrdersCommand(List<string> numbers, List<int> providers, DateTime? dateFrom, DateTime? dateTo) {
+            Numbers = numbers;
+            Providers = providers;
             DateFrom = dateFrom;
             DateTo = dateTo;
         }

@@ -38,12 +38,12 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
                 return EditOrderOutput.Failure(OrderErrors.AlreadyExists);
             
             if (await _repository.Entity<OrderItem>()
-                .AnyAsync(o => o.OrderId == order.Id && o.Name == number))
-                return EditOrderOutput.Failure(OrderErrors.ItemNameSameWithOrderName);
+                .AnyAsync(o => o.OrderId == order.Id && o.Name == request.Number))
+                return EditOrderOutput.Failure(OrderErrors.ContainsOrderItemWithSameName);
 
             if (request.ProviderId != null)
             {
-                var provider = await _repository.Entity<Provider>().AnyAsync(p => p.Id == request.ProviderId);
+                var provider = await _repository.Entity<Provider>().FirstOrDefaultAsync(p => p.Id == request.ProviderId);
                 if (provider == null)
                     return EditOrderOutput.Failure(ProviderErrors.NotFound);
 

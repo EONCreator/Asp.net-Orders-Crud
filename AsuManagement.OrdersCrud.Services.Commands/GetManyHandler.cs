@@ -19,20 +19,6 @@ namespace AsuManagement.OrdersCrud.Services.Commands
             Repository = repository;
         }
 
-        protected IQueryable<TEntity> Filter(IQueryable<TEntity> filteredObjects, Expression<Func<TEntity, bool>> predicate) 
-        {
-            var property = (predicate.Body as BinaryExpression).Right;
-            var value = ((ConstantExpression)property).Value;
-
-            if (value == null)
-                return filteredObjects;
-
-            if (value.ToString().Length == 0)
-                return filteredObjects;
-
-            return filteredObjects.Where(predicate);
-        }
-
         public async Task<GetManyQueryResponse<TEntity>> Handle(TCommand request, CancellationToken cancellationToken){
             var result = await Get(request);
             return new GetManyQueryResponse<TEntity>(result, result.Count);

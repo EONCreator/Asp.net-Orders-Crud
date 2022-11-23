@@ -34,7 +34,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
             {
                 if (await _repository.Entity<Order>()
                     .Select(o => new { o.Id, o.Number })
-                    .AnyAsync(o => o.Id == orderItem.OrderId && o.Number == orderItem.Name))
+                    .AnyAsync(o => o.Id == orderItem.OrderId && o.Number == request.Name))
                     return EditOrderItemOutput.Failure(OrderErrors.ItemNameSameWithOrderName);
 
                 orderItem.SetName(request.Name);

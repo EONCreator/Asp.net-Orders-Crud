@@ -13,5 +13,7 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Errors
 
         public static string ItemNameSameWithOrderName = "Название элемента не может равняться номеру заказа";
         public static string OrderItemNotFound = "Элемент заказа не найден";
+
+        public static string ContainsOrderItemWithSameName = "Заказ содержит элемент с таким же названием как и номер";
     }
 }

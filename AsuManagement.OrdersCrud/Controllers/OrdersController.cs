@@ -14,6 +14,7 @@ using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.AddItemToOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem;
 using AsuManagement.OrdersCrud.Services.Commands.OrderItems.DeleteOrderItem;
+using AsuManagement.OrdersCrud.Services.Commands.Orders;
 
 namespace AsuManagement.OrdersCrud.Controllers
 {
@@ -33,7 +34,7 @@ namespace AsuManagement.OrdersCrud.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] OrdersFilterModel request)
         {
-            return await _interactionBus.Send(new GetOrdersCommand(request!.Number, request!.ProviderId, 
+            return await _interactionBus.Send(new GetOrdersCommand(request.Numbers, request.Providers, 
                 request.DateFrom, request.DateTo));
         }
 

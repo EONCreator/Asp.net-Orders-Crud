@@ -13,6 +13,7 @@ using AsuManagement.OrdersCrud.Services.Commands.Orders.DeleteOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.AddItemToOrder;
 using AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem;
 using AsuManagement.OrdersCrud.Services.Commands.OrderItems.DeleteOrderItem;
+using AsuManagement.OrdersCrud.Services.Commands.Orders;
 
 namespace AsuManagement.OrdersCrud.Presenters
 {
@@ -28,8 +29,8 @@ namespace AsuManagement.OrdersCrud.Presenters
 
 
         #region Orders
-            .AddScoped<IRequestHandler<GetOrdersCommand, GetManyQueryResponse<Order>>, GetOrdersHandler>()
-            .AddScoped<IResponsePresenter<GetManyQueryResponse<Order>>, QueryResponsesPresenter<Order>>()
+            .AddScoped<IRequestHandler<GetOrdersCommand, GetOrdersOutput>, GetOrdersHandler>()
+            .AddScoped<IResponsePresenter<GetOrdersOutput>, GetOrdersPresenter>()
 
             .AddScoped<IRequestHandler<GetOrderCommand, GetOneQueryResponse<Order>>, GetOrderHandler>()
             .AddScoped<IResponsePresenter<GetOneQueryResponse<Order>>, QueryResponsesPresenter<Order>>()
