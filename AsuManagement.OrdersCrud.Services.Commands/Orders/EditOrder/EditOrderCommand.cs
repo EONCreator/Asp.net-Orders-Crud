@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
+using MediatR;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
 {
-    public class EditOrderCommand : IRequest<EditOrderOutput>
+    public class EditOrderCommand : IRequest<EntityIdOutput>
     {
         public int Id { get; }
         public string? Number { get; }

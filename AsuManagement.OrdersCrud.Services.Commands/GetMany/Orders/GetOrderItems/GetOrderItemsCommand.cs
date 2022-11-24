@@ -1,8 +1,9 @@
+using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using MediatR;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
 {
-    public class GetOrderItemsCommand : IRequest<GetOrderItemsOutput>
+    public class GetOrderItemsCommand : IRequest<List<OrderItem>>
     {
         public int OrderId { get; set; }
         public string? Name { get; set; }

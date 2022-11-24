@@ -3,10 +3,11 @@ using AsuManagement.OrdersCrud.Domain.Interfaces;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using AsuManagement.OrdersCrud.Domain.Core.Errors;
+using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
 {
-    public class EditOrderItemHandler : IRequestHandler<EditOrderItemCommand, EditOrderItemOutput>
+    public class EditOrderItemHandler : IRequestHandler<EditOrderItemCommand, EntityIdOutput>
     {
         private readonly IEntityRepository _repository;
 
@@ -15,19 +16,19 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
             _repository = repository;
         }
 
-        public async Task<EditOrderItemOutput> Handle(EditOrderItemCommand request, CancellationToken cancellationToken)
+        public async Task<EntityIdOutput> Handle(EditOrderItemCommand request, CancellationToken cancellationToken)
         {
             await using var unitOfWork = _repository.CreateUnitOfWork();
 
             var orderItem = await _repository.Entity<OrderItem>().FirstOrDefaultAsync(o => o.Id == request.Id);
             if (orderItem == null)
-                return EditOrderItemOutput.Failure(OrderErrors.OrderItemNotFound);
+                return EntityIdOutput.Failure(OrderErrors.OrderItemNotFound);
 
             if (request.Name != null)
             {
-                /*if (await _repository.Entity<Order>()
+                if (await _repository.Entity<Order>()
                     .AnyAsync(o => o.Id == orderItem.OrderId && o.Number == request.Name))
-                    return EditOrderItemOutput.Failure(OrderErrors.ItemNameSameWithOrderName);*/
+                    return EntityIdOutput.Failure(OrderErrors.ItemNameSameWithOrderName);
 
                 orderItem.SetName(request.Name);
             }
@@ -40,7 +41,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
 
             await unitOfWork.Commit();
 
-            return EditOrderItemOutput.Success(orderItem.Id);
+            return EntityIdOutput.Success(orderItem.Id);
         }
     }
 }

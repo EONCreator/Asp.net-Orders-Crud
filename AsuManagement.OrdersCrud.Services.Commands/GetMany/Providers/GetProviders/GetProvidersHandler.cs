@@ -5,7 +5,7 @@ using AsuManagement.OrdersCrud.Domain.Interfaces;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.Providers
 {
-    public class GetProvidersHandler : IRequestHandler<GetProvidersCommand, GetProvidersOutput>
+    public class GetProvidersHandler : IRequestHandler<GetProvidersCommand, List<Provider>>
     {
         private readonly IEntityRepository _repository;
 
@@ -13,7 +13,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Providers
             _repository = repository;
         }
 
-        public async Task<GetProvidersOutput> Handle(GetProvidersCommand request, CancellationToken cancellationToken)
-        => new GetProvidersOutput(await _repository.Entity<Provider>().ToListAsync(cancellationToken));
+        public async Task<List<Provider>> Handle(GetProvidersCommand request, CancellationToken cancellationToken)
+        => await _repository.Entity<Provider>().ToListAsync(cancellationToken);
     }
 }

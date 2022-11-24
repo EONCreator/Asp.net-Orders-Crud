@@ -5,7 +5,7 @@ using AsuManagement.OrdersCrud.Domain.Core.Entities;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
 {
-    public class GetOrderItemsHandler : IRequestHandler<GetOrderItemsCommand, GetOrderItemsOutput>
+    public class GetOrderItemsHandler : IRequestHandler<GetOrderItemsCommand, List<OrderItem>>
     {
         private readonly IEntityRepository _repository;
 
@@ -14,7 +14,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
             _repository = repository;
         }
 
-        public async Task<GetOrderItemsOutput> Handle(GetOrderItemsCommand request, CancellationToken cancellationToken)
+        public async Task<List<OrderItem>> Handle(GetOrderItemsCommand request, CancellationToken cancellationToken)
         {
             var orderItems = _repository.Entity<OrderItem>()
                 .Where(o => o.OrderId == request.OrderId);
@@ -27,7 +27,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
                 orderItems = orderItems.Where(o => o.Unit.ToLower()
                     .Contains(request.Unit.ToLower()));
 
-            return new GetOrderItemsOutput(await orderItems.ToListAsync(cancellationToken));
+            return await orderItems.ToListAsync(cancellationToken);
         }
     }
 }

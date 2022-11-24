@@ -5,7 +5,7 @@ using AsuManagement.OrdersCrud.Domain.Interfaces;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.GetOne.Orders
 {
-    public class GetOrderItemHandler : IRequestHandler<GetOrderItemCommand, GetOrderItemOutput>
+    public class GetOrderItemHandler : IRequestHandler<GetOrderItemCommand, OrderItem>
     {
         private readonly IEntityRepository _repository;
 
@@ -13,12 +13,8 @@ namespace AsuManagement.OrdersCrud.Services.Commands.GetOne.Orders
             _repository = repository;
         }
 
-        public async Task<GetOrderItemOutput> Handle(GetOrderItemCommand request, CancellationToken cancellationToken)
-        {
-            var orderItem = await _repository.Entity<OrderItem>()
+        public async Task<OrderItem> Handle(GetOrderItemCommand request, CancellationToken cancellationToken)
+        => await _repository.Entity<OrderItem>()
                 .FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
-
-            return new GetOrderItemOutput(orderItem);
-        }
     }
 }

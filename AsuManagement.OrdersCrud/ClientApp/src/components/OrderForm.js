@@ -20,7 +20,7 @@ export class OrderForm extends Component {
     getProviders = () => {
         fetch(`api/providers/`)
             .then(e => {
-                e.json().then(data => this.setState({ providers: data.providers, providerId: data.providers.length ? data.providers[0].id : null }))
+                e.json().then(data => this.setState({ providers: data, providerId: data.length ? data[0].id : null }))
             })
     }
 

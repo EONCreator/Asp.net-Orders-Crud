@@ -10,7 +10,8 @@ using AsuManagement.OrdersCrud.Services.Commands.OrderItems.DeleteOrderItem;
 using AsuManagement.OrdersCrud.Services.Commands.Providers;
 using AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders;
 using AsuManagement.OrdersCrud.Services.Commands.GetOne.Orders;
-using AsuManagement.OrdersCrud.Presenters.Providers;
+using AsuManagement.OrdersCrud.Domain.Core.Entities;
+using AsuManagement.OrdersCrud.Presenters.Common;
 
 namespace AsuManagement.OrdersCrud.Presenters
 {
@@ -19,9 +20,11 @@ namespace AsuManagement.OrdersCrud.Presenters
         public static IServiceCollection AddResponsesPresenters(this IServiceCollection services) =>
             services
 
+            .AddScoped<IResponsePresenter<EntityIdOutput>, EntityIdPresenter>()
+
         #region Providers
-            .AddScoped<IRequestHandler<GetProvidersCommand, GetProvidersOutput>, GetProvidersHandler>()
-            .AddScoped<IResponsePresenter<GetProvidersOutput>, GetProvidersPresenter>()
+            .AddScoped<IRequestHandler<GetProvidersCommand, List<Provider>>, GetProvidersHandler>()
+            .AddScoped<IResponsePresenter<List<Provider>>, EntitiesPresenter<Provider>>()
         #endregion
 
 
@@ -29,32 +32,24 @@ namespace AsuManagement.OrdersCrud.Presenters
             .AddScoped<IRequestHandler<GetOrdersCommand, GetOrdersOutput>, GetOrdersHandler>()
             .AddScoped<IResponsePresenter<GetOrdersOutput>, GetOrdersPresenter>()
 
-            .AddScoped<IRequestHandler<GetOrderCommand, GetOrderOutput>, GetOrderHandler>()
-            .AddScoped<IResponsePresenter<GetOrderOutput>, GetOrderPresenter>()
+            .AddScoped<IRequestHandler<GetOrderCommand, Order>, GetOrderHandler>()
+            .AddScoped<IResponsePresenter<List<Order>>, EntitiesPresenter<Order>>()
 
-            .AddScoped<IRequestHandler<CreateOrderCommand, CreateOrderOutput>, CreateOrderHandler>()
-            .AddScoped<IResponsePresenter<CreateOrderOutput>, CreateOrderPresenter>()
-
-            .AddScoped<IRequestHandler<EditOrderCommand, EditOrderOutput>, EditOrderHandler>()
-            .AddScoped<IResponsePresenter<EditOrderOutput>, EditOrderPresenter>()
-
+            .AddScoped<IRequestHandler<CreateOrderCommand, EntityIdOutput>, CreateOrderHandler>()
+            .AddScoped<IRequestHandler<EditOrderCommand, EntityIdOutput>, EditOrderHandler>()
             .AddScoped<IRequestHandler<DeleteOrderCommand, SucceededResult>, DeleteOrderHandler>()
 
         #endregion
 
         #region OrderItems
-            .AddScoped<IRequestHandler<GetOrderItemsCommand, GetOrderItemsOutput>, GetOrderItemsHandler>()
-            .AddScoped<IResponsePresenter<GetOrderItemsOutput>, GetOrderItemsPresenter>()
+            .AddScoped<IRequestHandler<GetOrderItemsCommand, List<OrderItem>>, GetOrderItemsHandler>()
+            .AddScoped<IResponsePresenter<List<OrderItem>>, EntitiesPresenter<OrderItem>>()
 
-            .AddScoped<IRequestHandler<GetOrderItemCommand, GetOrderItemOutput>, GetOrderItemHandler>()
-            .AddScoped<IResponsePresenter<GetOrderItemOutput>, GetOrderItemPresenter>()
+            .AddScoped<IRequestHandler<GetOrderItemCommand, OrderItem>, GetOrderItemHandler>()
+            .AddScoped<IResponsePresenter<OrderItem>, EntityPresenter<OrderItem>>()
 
-            .AddScoped<IRequestHandler<AddItemToOrderCommand, AddItemToOrderOutput>, AddItemToOrderHandler>()
-            .AddScoped<IResponsePresenter<AddItemToOrderOutput>, AddItemToOrderPresenter>()
-
-            .AddScoped<IRequestHandler<EditOrderItemCommand, EditOrderItemOutput>, EditOrderItemHandler>()
-            .AddScoped<IResponsePresenter<EditOrderItemOutput>, EditOrderItemPresenter>()
-
+            .AddScoped<IRequestHandler<AddItemToOrderCommand, EntityIdOutput>, AddItemToOrderHandler>()
+            .AddScoped<IRequestHandler<EditOrderItemCommand, EntityIdOutput>, EditOrderItemHandler>()
             .AddScoped<IRequestHandler<DeleteOrderItemCommand, SucceededResult>, DeleteOrderItemHandler>();
         #endregion
     }

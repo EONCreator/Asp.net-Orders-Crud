@@ -3,10 +3,11 @@ using AsuManagement.OrdersCrud.Domain.Interfaces;
 using AsuManagement.OrdersCrud.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using AsuManagement.OrdersCrud.Domain.Core.Errors;
+using AsuManagement.OrdersCrud.Domain.Interfaces.Results;
 
 namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
 {
-    public class EditOrderHandler : IRequestHandler<EditOrderCommand, EditOrderOutput>
+    public class EditOrderHandler : IRequestHandler<EditOrderCommand, EntityIdOutput>
     {
         private readonly IEntityRepository _repository;
 
@@ -15,13 +16,13 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
             _repository = repository;
         }
 
-        public async Task<EditOrderOutput> Handle(EditOrderCommand request, CancellationToken cancellationToken)
+        public async Task<EntityIdOutput> Handle(EditOrderCommand request, CancellationToken cancellationToken)
         {
             await using var unitOfWork = _repository.CreateUnitOfWork();
 
             var order = await _repository.Entity<Order>().FirstOrDefaultAsync(o => o.Id == request.Id);
             if (order == null)
-                return EditOrderOutput.Failure(OrderErrors.NotFound);
+                return EntityIdOutput.Failure(OrderErrors.NotFound);
 
             var number = request.Number != null ? request.Number : order.Number;
             var providerId = request.ProviderId != null ? request.ProviderId : order.ProviderId;
@@ -30,17 +31,17 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
                 .AnyAsync(o => o.Number == number
                 && o.ProviderId == providerId
                 && o.Id != order.Id))
-                return EditOrderOutput.Failure(OrderErrors.AlreadyExists);
+                return EntityIdOutput.Failure(OrderErrors.AlreadyExists);
             
             if (await _repository.Entity<OrderItem>()
                 .AnyAsync(o => o.OrderId == order.Id && o.Name == request.Number))
-                return EditOrderOutput.Failure(OrderErrors.ContainsOrderItemWithSameName);
+                return EntityIdOutput.Failure(OrderErrors.ContainsOrderItemWithSameName);
 
             if (request.ProviderId != null)
             {
                 var provider = await _repository.Entity<Provider>().FirstOrDefaultAsync(p => p.Id == request.ProviderId);
                 if (provider == null)
-                    return EditOrderOutput.Failure(ProviderErrors.NotFound);
+                    return EntityIdOutput.Failure(ProviderErrors.NotFound);
 
                 order.SetProvider(provider);
             }
@@ -52,7 +53,7 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrder
 
             await unitOfWork.Commit();
 
-            return EditOrderOutput.Success(order.Id);
+            return EntityIdOutput.Success(order.Id);
         }
     }
 }
