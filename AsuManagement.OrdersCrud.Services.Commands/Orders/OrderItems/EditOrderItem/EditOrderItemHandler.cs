@@ -25,9 +25,9 @@ namespace AsuManagement.OrdersCrud.Services.Commands.Orders.EditOrderItem
 
             if (request.Name != null)
             {
-                if (await _repository.Entity<Order>()
+                /*if (await _repository.Entity<Order>()
                     .AnyAsync(o => o.Id == orderItem.OrderId && o.Number == request.Name))
-                    return EditOrderItemOutput.Failure(OrderErrors.ItemNameSameWithOrderName);
+                    return EditOrderItemOutput.Failure(OrderErrors.ItemNameSameWithOrderName);*/
 
                 orderItem.SetName(request.Name);
             }

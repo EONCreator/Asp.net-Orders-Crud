@@ -1,4 +1,5 @@
-﻿using AsuManagement.OrdersCrud.Domain.Interfaces;
+﻿using AsuManagement.OrdersCrud.Domain.Core.Errors;
+using AsuManagement.OrdersCrud.Domain.Interfaces;
 
 namespace AsuManagement.OrdersCrud.Domain.Core.Entities
 {
@@ -29,20 +30,31 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Entities
 
         public void SetProvider(Provider provider)
         {
-            Provider = provider;
-            ProviderId = provider.Id;
+            if (provider != null)
+            {
+                Provider = provider;
+                ProviderId = provider.Id;
+            }
+            else
+                throw new NullReferenceException(ProviderErrors.NotFound);
         }
 
         public void AddOrderItem(OrderItem item)
         {
             if (item != null)
-                OrderItems.Add(item);
+            {
+                if (item.Name != Number)
+                    OrderItems.Add(item);
+                else
+                    throw new ArgumentException(OrderErrors.ContainsOrderItemWithSameName);
+            }
+            else
+                throw new NullReferenceException(OrderErrors.OrderItemNotFound);
         }
 
         public void RemoveOrderItem(OrderItem item)
-        {
-            if (item != null)
-                OrderItems.Remove(item);
-        }
+        => _ = item != null
+                ? OrderItems.Remove(item)
+                : throw new NullReferenceException(OrderErrors.OrderItemNotFound);
     }
 }

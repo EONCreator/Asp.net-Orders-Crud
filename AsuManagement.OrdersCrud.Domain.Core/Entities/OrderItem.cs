@@ -1,4 +1,5 @@
-﻿using AsuManagement.OrdersCrud.Domain.Interfaces;
+﻿using AsuManagement.OrdersCrud.Domain.Core.Errors;
+using AsuManagement.OrdersCrud.Domain.Interfaces;
 
 namespace AsuManagement.OrdersCrud.Domain.Core.Entities
 {
@@ -28,14 +29,5 @@ namespace AsuManagement.OrdersCrud.Domain.Core.Entities
 
         public void SetQuantity(decimal quantity) => Quantity = quantity;
         public void SetUnit(string unit) => Unit = unit;
-
-        public void SetOrder(Order order)
-        {
-            if (order != null)
-            {
-                Order = order;
-                OrderId = order.Id;
-            }
-        }
     }
 }

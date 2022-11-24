@@ -9,7 +9,8 @@ namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
     {
         private readonly IEntityRepository _repository;
 
-        public GetOrderItemsHandler(IEntityRepository repository) {
+        public GetOrderItemsHandler(IEntityRepository repository)
+        {
             _repository = repository;
         }
 
@@ -21,12 +22,12 @@ namespace AsuManagement.OrdersCrud.Services.Commands.GetMany.Orders
             if (request.Name != null)
                 orderItems = orderItems.Where(o => o.Name.ToLower()
                     .Contains(request.Name.ToLower()));
-                
+
             if (request.Unit != null)
                 orderItems = orderItems.Where(o => o.Unit.ToLower()
                     .Contains(request.Unit.ToLower()));
 
-            return new GetOrderItemsOutput(await orderItems.ToListAsync());
+            return new GetOrderItemsOutput(await orderItems.ToListAsync(cancellationToken));
         }
     }
 }
